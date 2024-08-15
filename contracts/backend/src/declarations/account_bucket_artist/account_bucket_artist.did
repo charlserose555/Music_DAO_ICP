@@ -1,0 +1,89 @@
+type UserId__1 = principal;
+type UserId = principal;
+type Tokens = record {e8s: nat64;};
+type Timestamp = int;
+type StatusResponse = 
+ record {
+   ckbtc_balance: opt nat;
+   cycles: opt nat;
+   heap_memory_size: opt nat;
+   icp_balance: opt Tokens;
+   memory_size: opt nat;
+   trax_balance: opt nat;
+   version: opt nat;
+ };
+type StatusRequest = 
+ record {
+   ckbtc_balance: opt bool;
+   cycles: opt bool;
+   heap_memory_size: opt bool;
+   icp_balance: opt bool;
+   memory_size: opt bool;
+   trax_balance: opt bool;
+   version: opt bool;
+ };
+type FileExtension = 
+ variant {
+   aac;
+   avi;
+   gif;
+   jpeg;
+   jpg;
+   mp3;
+   mp4;
+   png;
+   svg;
+   wav;
+ };
+type ContentInit = 
+ record {
+   chunkCount: nat;
+   contentId: text;
+   createdAt: Timestamp;
+   description: text;
+   extension: FileExtension;
+   name: text;
+   size: nat;
+   tags: vec text;
+   userId: UserId__1;
+ };
+type ContentId = text;
+type CanisterId = principal;
+type ArtistBucket = 
+ service {
+   changeCanisterSize: (nat) -> () oneway;
+   changeCycleAmount: (nat) -> () oneway;
+   createContent: (ContentInit) -> (opt record {
+                                          ContentId;
+                                          principal;
+                                        });
+   deleteAccount: () -> ();
+   deleteContentCanister: (principal) -> (bool);
+   getAllContentCanisters: () -> (vec CanisterId) query;
+   getCanisterOfContent: (ContentId) -> (opt CanisterId) query;
+   getCurrentCyclesBalance: () -> (nat);
+   getEntriesOfCanisterToContent: () ->
+    (vec record {
+           CanisterId;
+           ContentId;
+         }) query;
+   getPrincipalThis: () -> (principal) query;
+   getProfileInfo: (UserId) -> (opt ArtistAccountData__1) query;
+   getStatus: (opt StatusRequest) -> (opt StatusResponse);
+   getVersionNumber: () -> (nat) query;
+   initCanister: () -> (bool);
+   removeContent: (ContentId, nat) -> ();
+   transferFreezingThresholdCycles: () -> ();
+   updateProfileInfo: (ArtistAccountData__1) -> (bool);
+ };
+type ArtistAccountData__1 = 
+ record {
+   createdAt: Timestamp;
+   userPrincipal: principal;
+ };
+type ArtistAccountData = 
+ record {
+   createdAt: Timestamp;
+   userPrincipal: principal;
+ };
+service : (opt ArtistAccountData, principal, principal) -> ArtistBucket

@@ -1,0 +1,88 @@
+type definite_canister_settings = 
+ record {
+   compute_allocation: nat;
+   controllers: opt vec principal;
+   freezing_threshold: nat;
+   memory_allocation: nat;
+ };
+type UserType = 
+ variant {
+   artist;
+   fan;
+ };
+type UserId = principal;
+type Tokens = record {e8s: nat64;};
+type Timestamp = int;
+type StatusResponse = 
+ record {
+   ckbtc_balance: opt nat;
+   cycles: opt nat;
+   heap_memory_size: opt nat;
+   icp_balance: opt Tokens;
+   memory_size: opt nat;
+   trax_balance: opt nat;
+   version: opt nat;
+ };
+type StatusRequest = 
+ record {
+   ckbtc_balance: opt bool;
+   cycles: opt bool;
+   heap_memory_size: opt bool;
+   icp_balance: opt bool;
+   memory_size: opt bool;
+   trax_balance: opt bool;
+   version: opt bool;
+ };
+type FanAccountData = 
+ record {
+   createdAt: Timestamp;
+   userPrincipal: principal;
+ };
+type CanisterStatus = 
+ record {
+   cycles: nat;
+   memory_size: nat;
+   module_hash: opt blob;
+   settings: definite_canister_settings;
+   status: variant {
+             running;
+             stopped;
+             stopping;
+           };
+ };
+type CanisterId = principal;
+type ArtistAccountData = 
+ record {
+   createdAt: Timestamp;
+   userPrincipal: principal;
+ };
+service : {
+  changeCanisterSize: (nat) -> () oneway;
+  changeCycleAmount: (nat) -> () oneway;
+  createProfileArtist: (ArtistAccountData) -> (principal);
+  createProfileFan: (FanAccountData) -> (principal);
+  cyclesBalance: () -> (nat) query;
+  deleteAccountCanister: (UserId, principal, UserType) -> (bool);
+  getArtistAccountEntries: () -> (vec record {
+                                        UserId;
+                                        CanisterId;
+                                      }) query;
+  getCanisterArtist: (principal) -> (opt principal) query;
+  getCanisterFan: (principal) -> (opt principal) query;
+  getCanisterStatus: () -> (CanisterStatus);
+  getFanAccountEntries: () -> (vec record {
+                                     principal;
+                                     principal;
+                                   }) query;
+  getOwnerOfArtistCanister: (principal) -> (opt UserId) query;
+  getOwnerOfFanCanister: (principal) -> (opt UserId) query;
+  getStatus: (opt StatusRequest) -> (opt StatusResponse);
+  getTotalArtistAccounts: () -> (nat) query;
+  getTotalFanAccounts: () -> (nat) query;
+  installCode: (principal, blob, blob) -> ();
+  transferCyclesToAccountCanister: (principal, nat) -> ();
+  transferCyclesToCanister: (principal, nat) -> ();
+  transferCyclesToContentCanister: (principal, principal, nat) -> ();
+  transferOwnershipArtist: (principal, principal) -> ();
+  transferOwnershipFan: (principal, principal) -> ();
+}

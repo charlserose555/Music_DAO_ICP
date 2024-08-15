@@ -1,0 +1,105 @@
+type definite_canister_settings = 
+ record {
+   compute_allocation: nat;
+   controllers: opt vec principal;
+   freezing_threshold: nat;
+   memory_allocation: nat;
+ };
+type UserId = principal;
+type Tokens = record {e8s: nat64;};
+type Timestamp = int;
+type StatusResponse = 
+ record {
+   ckbtc_balance: opt nat;
+   cycles: opt nat;
+   heap_memory_size: opt nat;
+   icp_balance: opt Tokens;
+   memory_size: opt nat;
+   trax_balance: opt nat;
+   version: opt nat;
+ };
+type StatusRequest = 
+ record {
+   ckbtc_balance: opt bool;
+   cycles: opt bool;
+   heap_memory_size: opt bool;
+   icp_balance: opt bool;
+   memory_size: opt bool;
+   trax_balance: opt bool;
+   version: opt bool;
+ };
+type FileExtension = 
+ variant {
+   aac;
+   avi;
+   gif;
+   jpeg;
+   jpg;
+   mp3;
+   mp4;
+   png;
+   svg;
+   wav;
+ };
+type ContentInit = 
+ record {
+   chunkCount: nat;
+   contentId: text;
+   createdAt: Timestamp;
+   description: text;
+   extension: FileExtension;
+   name: text;
+   size: nat;
+   tags: vec text;
+   userId: UserId;
+ };
+type ContentId = text;
+type ContentData = 
+ record {
+   chunkCount: nat;
+   contentId: text;
+   createdAt: Timestamp;
+   description: text;
+   extension: FileExtension;
+   name: text;
+   size: nat;
+   tags: vec text;
+   uploadedAt: Timestamp;
+   userId: UserId;
+ };
+type CanisterStatus = 
+ record {
+   cycles: nat;
+   memory_size: nat;
+   module_hash: opt blob;
+   settings: definite_canister_settings;
+   status: variant {
+             running;
+             stopped;
+             stopping;
+           };
+ };
+type ArtistContentBucket = 
+ service {
+   changeCanisterSize: (nat) -> () oneway;
+   changeCycleAmount: (nat) -> () oneway;
+   checkCyclesBalance: () -> ();
+   createContent: (ContentInit) -> (opt ContentId);
+   getAllContentInfo: (ContentId) ->
+    (vec record {
+           ContentId;
+           ContentData;
+         }) query;
+   getCanisterStatus: () -> (CanisterStatus);
+   getContentChunk: (ContentId, nat) -> (opt blob) query;
+   getContentInfo: (ContentId) -> (opt ContentData) query;
+   getCurrentCyclesBalance: () -> (nat) query;
+   getPrincipalThis: () -> (principal) query;
+   getStatus: (opt StatusRequest) -> (opt StatusResponse);
+   getVersionNumber: () -> (nat) query;
+   putContentChunk: (ContentId, nat, blob) -> ();
+   removeContent: (ContentId, nat) -> ();
+   transferCyclesToThisCanister: () -> ();
+   transferFreezingThresholdCycles: () -> ();
+ };
+service : (principal, principal, principal) -> ArtistContentBucket

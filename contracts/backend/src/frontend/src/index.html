@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>dyn_canisters</title>
+    <base href="/" />
+    <link rel="icon" href="favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <main>
+      <img src="logo2.svg" alt="DFINITY logo" />
+      <div>
+        
+      </div>
+      <br />
+      <div style="background-color: cadetblue; border-radius: 20px; padding: 20px;">
+        <h3>Connected Canister ID: </h3>
+        <input id="connectCanID" type="text"/>
+
+      </div>
+      <br />
+      <h1>Create Fan Profile: </h1>
+      
+        <label for="username">Enter your username: &nbsp;</label>
+        <input id="username" alt="Username" type="text" />
+            <br/>
+        <label for="displayName">Enter your display name: &nbsp;</label>
+        <input id="displayName" alt="Display Name" type="text" />
+            <br/>
+        <label for="principal">Enter your principal: &nbsp;</label>
+        <input id="principal" alt="Principal" type="text" />
+            <br/>
+        <label for="email">Enter your email address: &nbsp;</label>
+        <input id="email" alt="Email" type="text" />
+            <br/>
+        <label for="firstName">Enter your first name: &nbsp;</label>
+        <input id="firstName" alt="First Name" type="text" />
+            <br/>
+        <label for="lastName">Enter your last name: &nbsp;</label>
+        <input id="lastName" alt="Last Name" type="text" />
+            <br/>
+
+        <button type="button" id="create">Create canister</button>
+      
+      <br/><br/>
+
+        <h1>Create Artist Profile: </h1>
+      
+       
+        <label for="principalA">Enter your principal: &nbsp;</label>
+        <input id="principalA" alt="Principal" type="text" />
+            <br/>
+        <!-- <label for="emailA">Enter your email address: &nbsp;</label>
+        <input id="emailA" alt="Email" type="text" />
+            <br/>
+        <label for="firstNameA">Enter your first name: &nbsp;</label>
+        <input id="firstNameA" alt="First Name" type="text" /> -->
+            
+        <button type="button" id="createA">Create canister</button>
+
+<!-- 
+        country: Text;
+        dateOfBirth: Nat;
+        bio: ?Text; -->
+      
+
+
+      <!-- <div>
+        <h1>Init canister</h1>
+        <button id="init">Init</button>
+      </div> -->
+
+      <div>
+        <h1>Get Fan Profile Info for <input id="getInfoPrince" type="text"/></h1>
+        <button type="button" id="getProfile">Get Profile Info</button>
+        <div>
+          <input id="usernameP"/>
+        </div>
+        <div>
+          <input id="displayNameP"/>
+        </div>
+        <div>
+          <input id="principalP"/>
+        </div>
+        <div>
+          <input id="emailP"/>
+        </div>
+        <div>
+          <input id="firstNameP"/>
+        </div>
+        <div>
+          <input id="lastNameP"/>
+        </div>
+
+        <div>
+          <button type="button" id="updateProfile">update Profile Info</button>
+        </div>
+      </div>
+
+
+      <div>
+        <h1>Get Artist Profile Info for <input id="getInfoPrinceA" type="text"/></h1>
+        <button type="button" id="getProfileA">Get Profile Info</button>
+        <div>
+          <input id="usernamePA"/>
+        </div>
+        <div>
+          <input id="displayNamePA"/>
+        </div>
+        <div>
+          <input id="principalPA"/>
+        </div>
+        <div>
+          <input id="emailPA"/>
+        </div>
+        <div>
+          <input id="firstNamePA"/>
+        </div>
+        <div>
+          <input id="lastNamePA"/>
+        </div>
+        <div>
+          <input id="countryPA"/>
+        </div>
+        <div>
+          <input id="dateOfBirthPA" type="number"/>
+        </div>
+        <div>
+          <input id="bioPA"/>
+        </div>
+
+        <div>
+          <button type="button" id="updateProfileA">update Profile Info</button>
+        </div>
+      </div>
+
+      
+
+      <div>
+        <h1>Get Canister ID of fan</h1>
+        <input id="canOwner"/>
+        <button type="button" id="getCanID">get</button>
+        <!-- <p id="canID"></p> -->
+      </div>
+
+      <div>
+        <h1>Get Canister ID of artist</h1>
+        <input id="canOwnerArtist"/>
+        <button type="button" id="getCanIDArtist">get</button>
+        <!-- <p id="canID"></p> -->
+      </div>
+
+
+      <div>
+        <h1>Get fan from canisterID</h1>
+        <input id="canID"/>
+        <button type="button" id="getFanID">get</button>
+        <p id="fanID"></p>
+      </div>
+
+      <div>
+        <h1>Get artist from canisterID</h1>
+        <input id="canIDA"/>
+        <button type="button" id="getArtistID">get</button>
+        <p id="fanID"></p>
+      </div>
+
+      <div>
+        <h1>Transfer Ownership</h1>
+        <label for="oldOwner">Enter your principal: &nbsp;</label>
+        <input id="oldOwner" alt="Owner" type="text" />
+        <br/>
+        <label for="newOwner">Enter the principal you wish to transfer ownership to: &nbsp;</label>
+        <input id="newOwner" alt="New Owner" type="text" />
+       
+
+        <button id="transferOwnership">Transfer</button>
+      </div>
+
+
+
+      <div>
+        <button id="getAllBuckets">Get all bucket IDs</button>
+      </div>
+
+      <div>
+        <button id="getThisPrincipal">get this principal</button>
+      </div>
+
+      <!-- <button type="button" id="hello">hello</button> -->
+
+      <!-- <LoadingIndicator
+        loadingMessage="Uploading..."
+        completedMessage="Uploaded!"
+        isLoading={uploading && !uploadingClean}
+      /> -->
+      <br>
+      <h1>Upload file.</h1>
+      <br>
+      <input
+        id="video-upload"
+        type="file"
+      />
+      <!-- {videoFile && ( -->
+        <div className="video-add-details">
+          <!-- <video src={videoPreviewURL} muted autoPlay loop /> -->
+          <div className="details-entry">
+            <label for="caption-content">CAPTION: </label>
+            <input
+              id="caption-content"
+             
+              placeholder="Add caption"
+            />
+            <label for="id-artist-upload">ARTIST Principal: </label>
+            <input type="text" id="id-artist-upload">
+            <button type="button" id="postContent" className="medium primary">
+              Post
+            </button>
+          </div>
+        </div>
+
+
+        <div>
+          <br>
+          <br>
+          <h1>Download file.</h1>
+          <br>
+          <div>
+            <label for="download-principal">artist principal: </label>
+            <input type="text" id="download-principal"/>
+          </div>
+          <div>
+            <label for="download-content-id">content id: </label>
+            <input type="text" id="download-content-id"/>
+          </div>
+          <!-- <div>
+            <label for="download-canister-id">canister id: </label>
+            <input type="text" id="download-canister-id"/>
+          </div> -->
+
+          <div>
+            <button type="button" id="downloadContent" >download</button>
+          </div>
+
+          <br>
+          <img
+            src=""
+            id="image-download"
+          >
+          <br>
+          <video id="video-download" width="320" height="240" controls>
+            <!-- <source id="video-download-src" src="blob:http://127.0.0.1:4943/5d912efc-9edf-4da0-9c36-771a82ed1c6a" type="video/mp4"> -->
+            <!-- <source src="movie.ogg" type="video/ogg"> -->
+          </video>
+        </div>
+      <!-- )} -->
+
+    </main>
+    
+      <!-- <script src="index.js"></script> -->
+   
+  </body>
+</html>

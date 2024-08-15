@@ -1,0 +1,23 @@
+// Version: 1.0.0
+type ArtistAccountData = {createdAt : Timestamp; userPrincipal : Principal};
+type ArtistAccountData__1 = ArtistAccountData;
+type CanisterId = canister_id;
+type CanisterId__3 = CanisterId;
+type ContentId = Text;
+type ContentId__2 = ContentId;
+type Entry<K, V> = (K, ?V, Nat32, [var Entry<K, V>]);
+type Timestamp = Int;
+type UserId = Principal;
+type UserId__3 = UserId;
+type canister_id = Principal;
+actor {
+  stable var CYCLE_AMOUNT : Nat;
+  stable var MAX_CANISTER_SIZE : Nat;
+  stable artistData : (Entry<UserId__3, ArtistAccountData__1>, [var Nat32]);
+  stable contentCanisterIds :
+    {var count : Nat; var elems : [var ?CanisterId__3]; initCapacity : Nat};
+  stable contentToCanister :
+    (Entry<ContentId__2, CanisterId__3>, [var Nat32]);
+  stable var initialised : Bool;
+  stable var owner : Principal
+};

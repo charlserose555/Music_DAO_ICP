@@ -1,0 +1,150 @@
+{
+  "canisters": {
+    "xrc": {
+      "type": "custom",
+      "candid": "src/xrc/xrc.did",
+      "wasm": "src/xrc/xrc.wasm",
+      "remote": {
+        "candid": "src/xrc/xrc.did",
+        "id": {
+          "ic": "uf6dk-hyaaa-aaaaq-qaaaq-cai"
+        }
+      }
+    },
+    "ledger": {
+      "type": "custom",
+      "wasm": "ledger.wasm",
+      "candid": "ledger.public.did",
+      "remote": {
+        "candid": "ledger.public.did",
+        "id": {
+          "ic": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+        }
+      }
+    },
+
+    "ckbtc_ledger" : {
+      "type" : "custom",
+      "candid" : "icrc1.did",
+      "wasm" : "icrc1.wasm",
+      "remote": {
+        "candid": "icrc1.did",
+        "id": {
+          "ic" : "mxzaz-hqaaa-aaaar-qaada-cai"
+        }
+      }
+    },
+
+    "trax_ledger" : {
+      "type" : "custom",
+      "candid" : "icrc1.did",
+      "wasm" : "icrc1.wasm",
+      "remote": {
+        "candid": "icrc1.did",
+        "id": {
+          "ic" : "emww2-4yaaa-aaaaq-aacbq-cai"
+        }
+      }
+    },
+    
+    "subscriptions": {
+      "main": "src/payments_backend/subscriptions.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "dependencies": ["ledger", "xrc"]
+    },
+
+    "ppv": {
+      "main": "src/payments_backend/ppv.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "source": ["dist", "src/assets"]
+    },
+
+    "ppv.staging": {
+      "main": "src/payments_backend/staging/ppv.staging.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "source": ["dist", "src/assets"]
+    },
+
+    "tipping": {
+      "main": "src/payments_backend/tipping.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "source": ["dist", "src/assets"]
+    },
+
+    "tipping.staging": {
+      "main": "src/payments_backend/staging/tipping.staging.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "source": ["dist", "src/assets"]
+    },
+
+    "airdrop": {
+      "main": "src/payments_backend/airdrop/airdrop.mo",
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true,
+        "env_override": ""
+      },
+      "source": ["dist", "src/assets"]
+    },
+    
+    "internet_identity": {
+      "type": "custom",
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "wasm": "internet_identity_dev.wasm",
+      "shrink": false,
+      "remote": {
+        "candid": "internet_identity.did",
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      }
+    }
+  },
+
+  "defaults": {
+    "replica": {
+      "subnet_type": "system"
+    },
+    "build": {
+      "args": "",
+      "packtool": "vessel sources"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8006",
+      "type": "ephemeral",
+      "replica": {
+        "subnet_type": "system"
+      }
+    },
+    "ic": {
+      "providers": ["https://icp0.io"],
+      "type": "persistent"
+    }
+  },
+  "declarations": {
+    "node_compatibility": true
+  },
+  "version": 1
+}

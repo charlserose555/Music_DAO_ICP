@@ -1,0 +1,32 @@
+{
+  "canisters": {
+    "cycles_manager": {
+      "main": "src/backend/cycles_manager.mo",
+      "type": "motoko",
+      "optimize": "cycles"
+    },
+    
+    "frontend": {
+      "dependencies": [
+        "backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/frontend/src/index.html"
+      },
+      "source": [
+        "src/frontend/assets",
+        "dist/frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "vessel sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

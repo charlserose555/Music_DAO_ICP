@@ -1,0 +1,23 @@
+type StatusResponse = 
+ record {
+   cycles: opt nat;
+   heap_memory_size: opt nat;
+   memory_size: opt nat;
+   version: opt nat;
+ };
+type StatusRequest = 
+ record {
+   cycles: bool;
+   heap_memory_size: bool;
+   memory_size: bool;
+   version: bool;
+ };
+type Identity = 
+ service {
+   changeHash: (text) -> (text);
+   getHashedToken: (text) -> (nat32, text) query;
+   getHashedTokenManager: (text, text) -> (nat32);
+   getStatus: (opt StatusRequest) -> (opt StatusResponse) query;
+   whoami: () -> (principal) query;
+ };
+service : (text) -> Identity

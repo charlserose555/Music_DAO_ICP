@@ -1,0 +1,49 @@
+type definite_canister_settings = 
+ record {
+   compute_allocation: nat;
+   controllers: opt vec principal;
+   freezing_threshold: nat;
+   memory_allocation: nat;
+ };
+type StatusResponse = 
+ record {
+   cycles: opt nat;
+   heap_memory_size: opt nat;
+   memory_size: opt nat;
+   version: opt nat;
+ };
+type StatusRequest = 
+ record {
+   cycles: bool;
+   heap_memory_size: bool;
+   memory_size: bool;
+   version: bool;
+ };
+type CanisterStatus = 
+ record {
+   cycles: nat;
+   memory_size: nat;
+   module_hash: opt blob;
+   settings: definite_canister_settings;
+   status: variant {
+             running;
+             stopped;
+             stopping;
+           };
+ };
+type CanisterId = principal;
+service : {
+  addCanister: (principal) -> ();
+  cyclesBalance: () -> (nat) query;
+  getAllCanisters: () -> (vec record {
+                                CanisterId;
+                                nat64;
+                              }) query;
+  getCanisterCycleValue: (principal) -> (opt nat64) query;
+  getCanisterStatus: () -> (CanisterStatus);
+  getStatus: (opt StatusRequest) -> (opt StatusResponse) query;
+  getTotalNumberCanisters: () -> (nat) query;
+  removeCanister: (principal) -> ();
+  topUpCanister: (principal, nat64) -> (bool);
+  topUpCanistersBatch: (vec principal, nat64) -> ();
+}

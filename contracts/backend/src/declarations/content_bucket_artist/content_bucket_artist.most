@@ -1,0 +1,35 @@
+// Version: 1.0.0
+type ChunkData = Blob;
+type ChunkData__1 = ChunkData;
+type ChunkId = Text;
+type ChunkId__1 = ChunkId;
+type ContentData =
+  {
+    chunkCount : Nat;
+    contentId : Text;
+    createdAt : Timestamp;
+    description : Text;
+    extension : FileExtension;
+    name : Text;
+    size : Nat;
+    tags : [Text];
+    uploadedAt : Timestamp;
+    userId : UserId
+  };
+type ContentData__1 = ContentData;
+type ContentId = Text;
+type ContentId__1 = ContentId;
+type Entry<K, V> = (K, ?V, Nat32, [var Entry<K, V>]);
+type FileExtension =
+  {#aac; #avi; #gif; #jpeg; #jpg; #mp3; #mp4; #png; #svg; #wav};
+type Timestamp = Int;
+type UserId = Principal;
+actor {
+  stable var CYCLE_AMOUNT : Nat;
+  stable var MAX_CANISTER_SIZE : Nat;
+  stable var canisterOwner : Principal;
+  stable chunksData : (Entry<ChunkId__1, ChunkData__1>, [var Nat32]);
+  stable content : (Entry<ContentId__1, ContentData__1>, [var Nat32]);
+  stable var initialised : Bool;
+  stable var managerCanister : Principal
+};

@@ -1,0 +1,91 @@
+type ArtistContentBucket = service {
+  changeCanisterSize : (nat) -> () oneway;
+  changeCycleAmount : (nat) -> () oneway;
+  checkCyclesBalance : () -> ();
+  createContent : (ContentInit) -> (opt ContentId);
+  getAllContentInfo : (ContentId) -> (
+      vec record { ContentId; ContentData },
+    ) query;
+  getCanisterStatus : () -> (CanisterStatus);
+  getContentChunk : (ContentId, nat) -> (opt vec nat8) query;
+  getContentInfo : (ContentId) -> (opt ContentData) query;
+  getCurrentCyclesBalance : () -> (nat) query;
+  getPrincipalThis : () -> (principal) query;
+  getStatus : (opt StatusRequest) -> (opt StatusResponse);
+  getVersionNumber : () -> (nat) query;
+  putContentChunk : (ContentId, nat, vec nat8) -> ();
+  removeContent : (ContentId, nat) -> ();
+  transferCyclesToThisCanister : () -> ();
+  transferFreezingThresholdCycles : () -> ();
+};
+type CanisterStatus = record {
+  status : variant { stopped; stopping; running };
+  memory_size : nat;
+  cycles : nat;
+  settings : definite_canister_settings;
+  module_hash : opt vec nat8;
+};
+type ContentData = record {
+  contentId : text;
+  userId : UserId;
+  name : text;
+  createdAt : Timestamp;
+  size : nat;
+  tags : vec text;
+  description : text;
+  chunkCount : nat;
+  extension : FileExtension;
+  uploadedAt : Timestamp;
+};
+type ContentId = text;
+type ContentInit = record {
+  contentId : text;
+  userId : UserId;
+  name : text;
+  createdAt : Timestamp;
+  size : nat;
+  tags : vec text;
+  description : text;
+  chunkCount : nat;
+  extension : FileExtension;
+};
+type FileExtension = variant {
+  aac;
+  avi;
+  gif;
+  jpg;
+  mp3;
+  mp4;
+  png;
+  svg;
+  wav;
+  jpeg;
+};
+type StatusRequest = record {
+  memory_size : opt bool;
+  trax_balance : opt bool;
+  version : opt bool;
+  cycles : opt bool;
+  heap_memory_size : opt bool;
+  ckbtc_balance : opt bool;
+  icp_balance : opt bool;
+};
+type StatusResponse = record {
+  memory_size : opt nat;
+  trax_balance : opt nat;
+  version : opt nat;
+  cycles : opt nat;
+  heap_memory_size : opt nat;
+  ckbtc_balance : opt nat;
+  icp_balance : opt Tokens;
+};
+type Timestamp = int;
+type Tokens = record { e8s : nat64 };
+type UserId = principal;
+type definite_canister_settings = record {
+  freezing_threshold : nat;
+  controllers : opt vec principal;
+  memory_allocation : nat;
+  compute_allocation : nat;
+};
+service : (principal, principal, principal) -> ArtistContentBucket
